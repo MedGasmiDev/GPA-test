@@ -2,11 +2,48 @@
 
 namespace App\Entity;
 
+
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\ApiResource\User\GetCollectionUsersController;
+use App\ApiResource\User\GetUserController;
+use App\ApiResource\User\PostUserController;
+use App\ApiResource\User\PutUsersController;
+use App\ApiResource\User\DeleteUsersController;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            uriTemplate: '/users',
+            controller: GetCollectionUsersController::class,
+            paginationEnabled: false
+        ),
+        new Get(
+            uriTemplate: '/user/{id}',
+            controller: GetUserController::class,
+        ),
+        new Post(
+            uriTemplate: '/user',
+            controller: PostUserController::class,
+        ),
+        new Put(
+            uriTemplate: '/user/{id}',
+            controller: PutUsersController::class,
+        ),
+        new Delete(
+            uriTemplate: '/user/{id}',
+            controller: DeleteUsersController::class,
+        ),
+    ]
+)]
+#[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]
 class User
 {
     #[ORM\Id]
