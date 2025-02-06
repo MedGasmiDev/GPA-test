@@ -55,8 +55,9 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        $user_have_mail = $userRepository->findOneBy(['email' => $user->getEmail()]);
         if ($form->isSubmitted()) {
-            if ($userRepository->findOneBy(['email' => $user->getEmail()])) {
+            if ( $user_have_mail && $user_have_mail != $user) {
                 $form->get('email')->addError(new FormError('Cet email est déjà utilisé.'));
             }
 
