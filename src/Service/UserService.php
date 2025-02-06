@@ -34,15 +34,15 @@ class UserService
     public function createUser(array $data): User
     {
         
-        if ($data['email'] !== $user->getEmail()) {
-            $existingUser = $this->userRepository->findOneBy(['email' => $data['email']]);
-            if ($data['email'] == null) {
-                throw new BadRequestHttpException('email required');
-            }
-            if ($existingUser) {
-                throw new BadRequestHttpException('Email is already in use.');
-            }
+        
+        $existingUser = $this->userRepository->findOneBy(['email' => $data['email']]);
+        if ($data['email'] == null) {
+            throw new BadRequestHttpException('email required');
         }
+        if ($existingUser) {
+            throw new BadRequestHttpException('Email is already in use.');
+        }
+        
 
         if ($data['firstName'] == null) {
             throw new BadRequestHttpException('firstName required');
