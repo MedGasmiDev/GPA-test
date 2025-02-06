@@ -17,7 +17,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 1. **Cloner le dépôt**
 
    ```bash
-   git clone https://github.com/votre-utilisateur/votre-repo.git
+   git clone https://github.com/MedGasmiDev/GPA-test.git
    cd votre-repo
 
    Basculer sur la branche development
