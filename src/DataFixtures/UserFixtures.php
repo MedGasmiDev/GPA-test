@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\User;
@@ -11,9 +13,9 @@ class UserFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('fr_FR'); 
+        $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) { 
+        for ($i = 0; $i < 10; ++$i) {
             $user = new User();
             $user->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)

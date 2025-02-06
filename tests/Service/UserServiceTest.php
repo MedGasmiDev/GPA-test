@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service;
 
 use App\Entity\User;
@@ -7,9 +9,9 @@ use App\Repository\UserRepository;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserServiceTest extends TestCase
 {
@@ -21,9 +23,9 @@ class UserServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->userRepository = $this->createMock(UserRepository::class);
-        $this->entityManager = $this->createMock(EntityManagerInterface::class);
-        $this->validator = $this->createMock(ValidatorInterface::class);
-        $this->userService = new UserService($this->userRepository, $this->entityManager, $this->validator);
+        $this->entityManager  = $this->createMock(EntityManagerInterface::class);
+        $this->validator      = $this->createMock(ValidatorInterface::class);
+        $this->userService    = new UserService($this->userRepository, $this->entityManager, $this->validator);
     }
 
     public function testGetAllUsers(): void
@@ -71,10 +73,10 @@ class UserServiceTest extends TestCase
     {
         $data = [
             'firstName' => 'Mohamed',
-            'lastName' => 'Gasmi',
-            'email' => 'test@example.com',
-            'phone' => '123456789',
-            'birthday' => '1990-01-01',
+            'lastName'  => 'Gasmi',
+            'email'     => 'test@example.com',
+            'phone'     => '123456789',
+            'birthday'  => '1990-01-01',
         ];
 
         $violations = new ConstraintViolationList();
@@ -102,10 +104,10 @@ class UserServiceTest extends TestCase
 
         $data = [
             'firstName' => 'UpdatedFirstName',
-            'lastName' => 'UpdatedLastName',
-            'email' => 'updated@example.com',
-            'phone' => '987654321',
-            'birthday' => '2000-01-01',
+            'lastName'  => 'UpdatedLastName',
+            'email'     => 'updated@example.com',
+            'phone'     => '987654321',
+            'birthday'  => '2000-01-01',
         ];
 
         $this->userRepository->method('find')->willReturn($user);
@@ -135,24 +137,24 @@ class UserServiceTest extends TestCase
 
         $this->userService->deleteUser(1);
 
-        $this->assertTrue(true); 
+        $this->assertTrue(true);
     }
 
     public function testCreateUserWithDuplicateEmail(): void
     {
         $data = [
             'firstName' => 'Mohamed',
-            'lastName' => 'Gasmi',
-            'email' => 'test@example.com',
-            'phone' => '123456789',
-            'birthday' => '1990-01-01',
+            'lastName'  => 'Gasmi',
+            'email'     => 'test@example.com',
+            'phone'     => '123456789',
+            'birthday'  => '1990-01-01',
         ];
 
         $existingUser = new User();
         $existingUser->setEmail('test@example.com');
         $this->userRepository->method('findOneBy')->willReturn($existingUser);
 
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\BadRequestHttpException::class);
+        $this->expectException(BadRequestHttpException::class);
         $this->expectExceptionMessage('Email is already in use.');
 
         $this->userService->createUser($data);
@@ -169,10 +171,10 @@ class UserServiceTest extends TestCase
 
         $data = [
             'firstName' => 'UpdatedFirstName',
-            'lastName' => 'UpdatedLastName',
-            'email' => 'duplicate@example.com', 
-            'phone' => '987654321',
-            'birthday' => '2000-01-01',
+            'lastName'  => 'UpdatedLastName',
+            'email'     => 'duplicate@example.com',
+            'phone'     => '987654321',
+            'birthday'  => '2000-01-01',
         ];
 
         $existingUser = new User();
@@ -181,7 +183,7 @@ class UserServiceTest extends TestCase
 
         $this->userRepository->method('find')->willReturn($user);
 
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\BadRequestHttpException::class);
+        $this->expectException(BadRequestHttpException::class);
         $this->expectExceptionMessage('Email is already in use.');
 
         $this->userService->updateUser(1, $data);

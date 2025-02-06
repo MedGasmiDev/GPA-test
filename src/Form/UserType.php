@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\User;
@@ -16,7 +18,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
-                'label' => 'Prénom',
+                'label'       => 'Prénom',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Le prénom est obligatoire.',
@@ -24,7 +26,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('lastName', TextType::class, [
-                'label' => 'Nom',
+                'label'       => 'Nom',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Le nom est obligatoire.',
@@ -32,7 +34,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label'       => 'Email',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'L\'email est obligatoire.',

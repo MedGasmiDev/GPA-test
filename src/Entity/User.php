@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
-
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\GetCollection;
-use App\Repository\UserRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
+use App\ApiResource\User\DeleteUsersController;
 use App\ApiResource\User\GetCollectionUsersController;
 use App\ApiResource\User\GetUserController;
 use App\ApiResource\User\PostUserController;
 use App\ApiResource\User\PutUsersController;
-use App\ApiResource\User\DeleteUsersController;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ApiResource(
     operations: [

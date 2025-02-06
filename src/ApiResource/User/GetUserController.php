@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ApiResource\User;
 
 use App\Service\UserService;
@@ -9,8 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GetUserController extends AbstractController
 {
-    public function __construct(private UserService $userService) {}
-    
+    public function __construct(private UserService $userService)
+    {
+    }
+
     #[Route('/api/user/{id}', name: 'user_by_id', methods: ['GET'])]
     public function __invoke(int $id): JsonResponse
     {
@@ -18,8 +22,7 @@ class GetUserController extends AbstractController
         if (!$user) {
             return $this->json(['message' => 'User not found'], 404);
         }
+
         return $this->json($user);
     }
-
-    
 }

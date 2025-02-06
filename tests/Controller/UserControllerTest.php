@@ -1,10 +1,12 @@
 <?php
+
+declare(strict_types=1);
 // tests/Controller/UserControllerTest.php
+
 namespace App\Tests\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerTest extends WebTestCase
 {

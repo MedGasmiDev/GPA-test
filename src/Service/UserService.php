@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserService
 {
@@ -17,8 +19,8 @@ class UserService
     public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager, ValidatorInterface $validator)
     {
         $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
-        $this->validator = $validator;
+        $this->entityManager  = $entityManager;
+        $this->validator      = $validator;
     }
 
     public function getAllUsers(): array
@@ -33,23 +35,19 @@ class UserService
 
     public function createUser(array $data): User
     {
-        
-        
         $existingUser = $this->userRepository->findOneBy(['email' => $data['email']]);
-        if ($data['email'] == null) {
+        if (null == $data['email']) {
             throw new BadRequestHttpException('email required');
         }
         if ($existingUser) {
             throw new BadRequestHttpException('Email is already in use.');
         }
-        
 
-        if ($data['firstName'] == null) {
+        if (null == $data['firstName']) {
             throw new BadRequestHttpException('firstName required');
         }
 
-
-        if ($data['lastName'] == null) {
+        if (null == $data['lastName']) {
             throw new BadRequestHttpException('lastName required');
         }
 
@@ -81,7 +79,7 @@ class UserService
 
         if ($data['email'] !== $user->getEmail()) {
             $existingUser = $this->userRepository->findOneBy(['email' => $data['email']]);
-            if ($data['email'] == null) {
+            if (null == $data['email']) {
                 throw new BadRequestHttpException('email required');
             }
             if ($existingUser) {
@@ -89,12 +87,11 @@ class UserService
             }
         }
 
-        if ($data['firstName'] == null) {
+        if (null == $data['firstName']) {
             throw new BadRequestHttpException('firstName required');
         }
 
-
-        if ($data['lastName'] == null) {
+        if (null == $data['lastName']) {
             throw new BadRequestHttpException('lastName required');
         }
 
