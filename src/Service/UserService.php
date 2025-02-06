@@ -33,9 +33,24 @@ class UserService
 
     public function createUser(array $data): User
     {
-        $existingUser = $this->userRepository->findOneBy(['email' => $data['email']]);
-        if ($existingUser) {
-            throw new BadRequestHttpException('Email is already in use.');
+        
+        if ($data['email'] !== $user->getEmail()) {
+            $existingUser = $this->userRepository->findOneBy(['email' => $data['email']]);
+            if ($data['email'] == null) {
+                throw new BadRequestHttpException('email required');
+            }
+            if ($existingUser) {
+                throw new BadRequestHttpException('Email is already in use.');
+            }
+        }
+
+        if ($data['firstName'] == null) {
+            throw new BadRequestHttpException('firstName required');
+        }
+
+
+        if ($data['lastName'] == null) {
+            throw new BadRequestHttpException('lastName required');
         }
 
         $user = new User();
@@ -66,9 +81,21 @@ class UserService
 
         if ($data['email'] !== $user->getEmail()) {
             $existingUser = $this->userRepository->findOneBy(['email' => $data['email']]);
+            if ($data['email'] == null) {
+                throw new BadRequestHttpException('email required');
+            }
             if ($existingUser) {
                 throw new BadRequestHttpException('Email is already in use.');
             }
+        }
+
+        if ($data['firstName'] == null) {
+            throw new BadRequestHttpException('firstName required');
+        }
+
+
+        if ($data['lastName'] == null) {
+            throw new BadRequestHttpException('lastName required');
         }
 
         $user->setFirstName($data['firstName']);
